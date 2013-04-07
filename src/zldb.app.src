@@ -1,0 +1,16 @@
+{application, zldb,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  sasl,
+                  crypto,
+                  compiler,
+                  lager
+                 ]},
+  {mod, { zldb_app, []}},
+  {env, []}
+ ]}.
