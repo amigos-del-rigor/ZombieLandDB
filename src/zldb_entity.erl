@@ -48,6 +48,10 @@ running({timeout, _Ref, "life is too hard, killme!"}, State) ->
   Id = loopdata_get(State, id),
   % delete item in the manager that links id to pid
   zldb_manager:delete(Id),
+  % persist loopdata
+  LoopData = loopdata_get(State, data),
+  zldb_persistent_layer:set(Id, LoopData),
+  % shutdown
   {stop, shutdown, State}.
 
 

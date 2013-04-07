@@ -24,7 +24,15 @@ test_ancestors() ->
   {ok, ResultData1} = zldb_entity:get(Pid1, data),
   ?assert_equal("Lorem ipsum dolor sit amet, consectetur adipiscing elit", ResultData1),
   {ok, ResultData2} = zldb_entity:get(Pid2, data),
-  ?assert_equal("Lorem ipsum dolor sit amet, consectetur adipiscing elit", ResultData2).
+  ?assert_equal("Lorem ipsum dolor sit amet, consectetur adipiscing elit", ResultData2),
+
+  ok = zldb_entity:set(Pid1, foo, "abc"),
+  {ok, ResultFoo} = zldb_entity:get(Pid1, foo),
+  ?assert_equal("abc", ResultFoo),
+  ok = zldb_entity:set(Pid1, foo, "123"),
+  {ok, ResultFoo2} = zldb_entity:get(Pid1, foo),
+  ?assert_equal("123", ResultFoo2).
+
 
 
 after_test() ->
