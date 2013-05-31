@@ -5,7 +5,7 @@
 -behaviour(gen_fsm).
 
 %% API
--export([start_link/0, get/2, set/3, set_ttl/2]).
+-export([start_link/0, get/2, set/3, setPidList/3, set_ttl/2]).
 
 %% gen_fsm
 -export([init/1, running/2, running/3, handle_event/3,
@@ -19,7 +19,12 @@ get(Pid, Key) ->
   gen_fsm:sync_send_event(Pid, {get, Key}).
 
 set(Pid, Key, Value) ->
+  lager:debug("Pid: ~p, ~p => ~p", [Pid, Key, Value]),
   gen_fsm:send_event(Pid, {set, {Key, Value}}).
+
+setPidList(PidList, Key, Value) ->
+  Pid = list_to_pid(PidList),
+  set(Pid, Key, Value).
 
 set_ttl(Pid, NewTime) ->
   gen_fsm:send_event(Pid, {set_timer, NewTime}),
@@ -28,7 +33,7 @@ set_ttl(Pid, NewTime) ->
 %% gen_fsm callbacks
 -record(zldb_entity_state, {
   timer_ref=none,
-  timer_time=60000, % ms (1')
+  timer_time=60000, % ms (10")
   loop_data=[] % proplist
 }).
 
@@ -38,8 +43,10 @@ init(_Args) ->
 
 
 running({set, {Key, Value}}, State) ->
+  lager:debug("running set: ~p => ~p", [Key, Value]),
   NewState = loopdata_set(State, Key, Value),
   NewStateTimerUpdated = update_timer(NewState),
+  lager:debug("running state: ~p", [NewStateTimerUpdated]),
   {next_state, running, NewStateTimerUpdated};
 running({set_timer, Time}, State) ->
   NewState = set_timer(State, Time),

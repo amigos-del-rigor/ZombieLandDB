@@ -7,8 +7,13 @@ Usage
 
 Quick start
 ---
+Start ZombieLandDB:
+
     make
     erl -pa ebin deps/*/ebin -boot zldb
+
+
+Set some example data:
 
     {ok, Pid1} = zldb_manager:get_pid_from_id("abc").
     {ok, Pid2} = zldb_manager:get_pid_from_id("123").
@@ -22,3 +27,11 @@ Quick start
 Test
 ===
     ERL_AFLAGS="-boot zldb" deps/etest/bin/etest-runner
+
+
+TODO
+===
+- Persistent layer. Now is too fool.
+- Stress creating +32k entities
+- Alternative process register: gproc (https://github.com/uwiger/gproc)
+

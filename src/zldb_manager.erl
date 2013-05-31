@@ -3,7 +3,7 @@
 -author("jllonch").
 
 %% API
--export([initialize/0, get_pid_from_id/1, delete/1]).
+-export([initialize/0, get_pid_from_id/1, get_term_pid_from_id/1, delete/1]).
 
 initialize() ->
   % Create a new ETS table, called from supervisor
@@ -22,6 +22,12 @@ get_pid_from_id(Id) ->
     {Id, Pid} ->
       {ok, Pid}
   end.
+
+get_term_pid_from_id(Id) ->
+  {ok, Pid} = get_pid_from_id(Id),
+  TermPid = pid_to_list(Pid),
+  {ok, TermPid}.
+
 
 %% Private functions
 delete(Key) ->
