@@ -10,8 +10,7 @@ Quick start
 Start ZombieLandDB:
 
     make
-    erl -pa ebin deps/*/ebin -boot zldb
-
+    erl -pa ebin deps/*/ebin -boot zldb    
 
 Set some example data:
 
@@ -28,10 +27,13 @@ Test
 ===
     ERL_AFLAGS="-boot zldb" deps/etest/bin/etest-runner
 
+On Symfony2ErlangBundle Demo, Start ZombieLandDB as:
+====================================================
+
+    erl -pa ebin deps/*/ebin -boot zldb -sname node0 -setcookie abc +P 2000000
 
 TODO
 ===
 - Persistent layer. Now is too fool.
-- Stress creating +32k entities
 - Alternative process register: gproc (https://github.com/uwiger/gproc)
 
