@@ -26,9 +26,12 @@ Set some example data:
 Test
 ===
     ERL_AFLAGS="-boot zldb" deps/etest/bin/etest-runner
+    
 
-On Symfony2ErlangBundle Demo, Start ZombieLandDB as:
-====================================================
+Symfony2ErlangBundle Demo
+=========================
+
+Start ZombieLandDB as:
 
     erl -pa ebin deps/*/ebin -boot zldb -sname node0 -setcookie abc +P 2000000
 
